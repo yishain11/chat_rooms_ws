@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "npm --prefix ./client i; npm --prefix ./client run dev &",
+    "server": "npm i; node --watch ./server/server.js",
+    "startApp": "npm run client; npm i; node --watch ./server/server.js"
   },
   "keywords": [],
   "author": "",
