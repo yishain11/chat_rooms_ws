@@ -42,8 +42,6 @@ app.get('/users', (req, res) => {
 
 app.post('/startChat', (req, res) => {
     const { currentUserId, reciverUserId } = req.body;
-    console.log('reciverUserId', reciverUserId);
-    console.log('currentUserId', currentUserId);
     const sorted = [currentUserId, reciverUserId].sort();
     const usersKeys = `${sorted[0]}_${sorted[1]}`;
     if (!(usersKeys in sockets)) {
@@ -57,8 +55,6 @@ app.post('/startChat', (req, res) => {
             ws.send(JSON.stringify({ type: 'connection', msg: `user connected to port num: ${port}`, }));
             ws.on("message", (data) => {
                 const msg = data.toString();
-                console.log('msg', msg);
-                // ws.send(JSON.stringify({ msg }));
                 wsServer.clients.forEach(function each(client) {
                     if (client.readyState === WebSocket.OPEN) {
                         client.send(JSON.stringify({ msg }));
@@ -73,10 +69,7 @@ app.post('/startChat', (req, res) => {
             };
         });
         sockets[usersKeys] = { ws: wsServer, port, currentlyConnected: [] };
-    } else {
-        console.log('allready connected!');
     }
-    console.log('sockets[usersKeys].port', sockets[usersKeys].port);
     res.json({ port: sockets[usersKeys].port }).end();
     return;
 });

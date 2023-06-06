@@ -27,18 +27,15 @@ function App() {
 
   useEffect(() => {
     if (currentSocket) {
-      console.log('new web socket!');
       currentSocket.onopen = (data) => {
         console.log("🟢🟢🟢  user connected  🟢🟢🟢");
       };
 
       currentSocket.onmessage = (e) => {
         const msg = e.data;
-        console.log('msg', msg);
         try {
           const jsonMsg = JSON.parse(msg);
           const parsedMsg = JSON.parse(jsonMsg.msg);
-          console.log('parsedMsg', parsedMsg);
           setMsgs((prev) => [...prev, parsedMsg]);
         } catch (error) {
           setMsgs((prev) => [...prev, msg]);
